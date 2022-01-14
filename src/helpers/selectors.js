@@ -34,6 +34,13 @@ const getInterview = (state, interview) => {
   return interview;
 };
 
+/**
+ * Appointments selector function
+ * @param {object} state - a React state object contains appointments and days
+ * @param {string} name - day
+ * @returns [interviewers] - an array of interviewers for specific day, returns null if state empty or name not found
+ */
+
 const getInterviewersForDay = (state, name) => {
   if (state.days.length < 1) {
     return [];
