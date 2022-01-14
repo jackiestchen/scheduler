@@ -4,7 +4,7 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
 import axios from "axios";
-import { getAppointmentsForDay } from "helpers/selectors";
+import { getAppointmentsForDay, getInterviewersForDay } from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -13,17 +13,19 @@ export default function Application(props) {
     appointments: {},
     interviewers: {},
   });
+  const setDay = (day) => setState({ ...state, day });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-
-  const setDay = (day) => setState({ ...state, day });
+  
+  const dailyInterviewers = getInterviewersForDay(state, state.day);
 
   const appointmentRender = Object.values(dailyAppointments).map(
     (appointment) => {
-      return <Appointment key={appointment.id} {...appointment} />;
+      return <Appointment key={appointment.id} {...appointment} interviewers={dailyInterviewers} />;
     }
   );
 
+  //useEffect hook to get data asynchronously using axios and set state at the same time using Promise.all
   useEffect(() => {
     const GET_DAYS = `http://localhost:8001/api/days`;
     const GET_APPOINTMENTS = `http://localhost:8001/api/appointments`;
@@ -43,6 +45,8 @@ export default function Application(props) {
     });
   }, []);
 
+
+  //React Application component
   return (
     <main className="layout">
       <section className="sidebar">
