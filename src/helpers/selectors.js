@@ -2,7 +2,7 @@
  * Appointments selector function
  * @param {object} state - a React state object contains appointments and days
  * @param {string} name - day
- * @returns an array of appointments for specific day, returns null if state empty or name not found
+ * @returns [appointments] - an array of appointments for specific day, returns null if state empty or name not found
  */
 
 const getAppointmentsForDay = (state, name) => {
@@ -21,8 +21,8 @@ const getAppointmentsForDay = (state, name) => {
 
 /**
  * Interviewer selector function
- * @param {interviewers} state -a React state object contains interviewers object
- * @param {student, interviewer} interview - interview object
+ * @param {object} state -a React state object contains interviewers object
+ * @param {object} interview - interview object
  * @returns interview object {student: name, interviewer: {id, name, avatar} }
  */
 
@@ -34,6 +34,18 @@ const getInterview = (state, interview) => {
   return interview;
 };
 
-module.exports = { getAppointmentsForDay, getInterview };
+const getInterviewersForDay = (state, name) => {
+  if (state.days.length < 1) {
+    return [];
+  }
 
+  const todayObject = state.days.filter((day) => day.name === name);
 
+  if (todayObject.length < 1) {
+    return [];
+  }
+
+  return todayObject[0].interviewers.map((id) => state.interviewers[id]);
+};
+
+module.exports = { getAppointmentsForDay, getInterview, getInterviewersForDay };
