@@ -4,7 +4,11 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
 import axios from "axios";
-import { getAppointmentsForDay, getInterviewersForDay } from "helpers/selectors";
+import {
+  getAppointmentsForDay,
+  getInterview,
+  getInterviewersForDay,
+} from "helpers/selectors";
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -13,15 +17,43 @@ export default function Application(props) {
     appointments: {},
     interviewers: {},
   });
-  const setDay = (day) => setState({ ...state, day });
-
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const setDay = (day) => setState({ ...state, day });  
   
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
+
+  const bookInterview = (id, interview) => {
+    // interview = getInterview(state, interview);
+    console.log(id, interview);
+
+    // const appointment = {
+    //   ...state.appointments[id],
+    //   interview: { ...interview },
+    // };
+    // const appointments = {
+    //   ...state.appointments,
+    //   [id]: appointment,
+    // };
+    // setState((prev) => ({
+    //   ...prev,
+    //   appointments,
+    // }));
+  };
 
   const appointmentRender = Object.values(dailyAppointments).map(
     (appointment) => {
-      return <Appointment key={appointment.id} {...appointment} interviewers={dailyInterviewers} />;
+
+      const interview = getInterview(state, appointment.interview);
+
+      return (
+        <Appointment
+          key={appointment.id}
+          {...appointment}
+          interviewers={dailyInterviewers}
+          bookInterview={bookInterview}
+          interview={interview}
+        />
+      );
     }
   );
 
@@ -44,7 +76,6 @@ export default function Application(props) {
       }));
     });
   }, []);
-
 
   //React Application component
   return (
