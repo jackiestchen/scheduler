@@ -30,8 +30,12 @@ const getInterview = (state, interview) => {
   if (interview === null) {
     return null;
   }
-  interview.interviewer = state.interviewers[interview.interviewer];
-  return interview;
+  const interviewer = state.interviewers[interview.interviewer];
+
+  const newInterview = Object.assign({}, interview);
+  newInterview.interviewer = interviewer;
+  
+  return newInterview;
 };
 
 /**
