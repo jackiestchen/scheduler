@@ -4,6 +4,14 @@ export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
 
+
+  /**
+   * Function to transition between "mode"
+   * @param {mode} transition 
+   * @param {boolean} replace
+   * Store mode history in state.
+   */
+  
   const transition = (transition, replace = false) => {
     if (replace === false) {
       history.push(mode);
