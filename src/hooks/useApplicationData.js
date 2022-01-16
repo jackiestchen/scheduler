@@ -12,6 +12,22 @@ export default function useApplicationData(initial) {
   const setDay = (day) => setState({ ...state, day });
 
   /**
+   * Function updates the spots in state.days
+   * @param {numer} num 
+   * @returns updated days object
+   */
+  const updateSpots = (num) => {
+    let days = [];
+    state.days.forEach((day) => {
+      if (day.name === state.day) {
+        day.spots = day.spots + num;
+      }
+      days.push(day);
+    });
+    return days;
+  };
+
+  /**
    * Send PUT request to server and update DB with appointment information
    * @param {number} id
    * @param {object} interview
@@ -31,9 +47,11 @@ export default function useApplicationData(initial) {
     const PUT_APPOINTMENT = `http://localhost:8001/api/appointments/${id}`;
 
     return axios.put(PUT_APPOINTMENT, appointment).then((res) => {
+      const days = updateSpots(-1);
       setState((prev) => ({
         ...prev,
         appointments,
+        days,
       }));
     });
   };
@@ -54,9 +72,11 @@ export default function useApplicationData(initial) {
       [id]: appointment,
     };
     return axios.delete(DELETE_APPOINTMENT).then((res) => {
+      const days = updateSpots(+1);
       setState((prev) => ({
         ...prev,
         appointments,
+        days,
       }));
     });
   };
@@ -81,5 +101,5 @@ export default function useApplicationData(initial) {
     });
   }, []);
 
-  return { state, setState, setDay, bookInterview, cancelInterview };
+  return { state, setDay, bookInterview, cancelInterview };
 }
