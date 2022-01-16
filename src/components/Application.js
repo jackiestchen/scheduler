@@ -22,9 +22,13 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
+  /**
+   * Send put request to server and update DB with appointment information
+   * @param {number} id
+   * @param {object} interview
+   * @returns a promise of PUT request
+   */
   const bookInterview = (id, interview) => {
-    // console.log(id, interview);
-
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
@@ -45,6 +49,24 @@ export default function Application(props) {
     });
   };
 
+  const cancelInterview = (id) => {
+    const DELETE_APPOINTMENT = `http://localhost:8001/api/appointments/${id}`;
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    return axios.delete(DELETE_APPOINTMENT).then((res) => {
+      setState((prev) => ({
+        ...prev,
+        appointments,
+      }));
+    });
+  };
+
   const appointmentRender = Object.values(dailyAppointments).map(
     (appointment) => {
       const interview = getInterview(state, appointment.interview);
@@ -56,6 +78,7 @@ export default function Application(props) {
           interviewers={dailyInterviewers}
           bookInterview={bookInterview}
           interview={interview}
+          cancelInterview={cancelInterview}
         />
       );
     }
