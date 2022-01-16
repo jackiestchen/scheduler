@@ -5,6 +5,7 @@ import Show from "./Show";
 import Empty from "./Empty";
 import useVisualMode from "hooks/useVisualMode";
 import Form from "./Form";
+import Status from "./Status";
 
 export default function Appointment(props) {
   const EMPTY = "EMPTY";
@@ -42,6 +43,7 @@ export default function Appointment(props) {
           onCancel={() => back()}
         />
       )}
+      {mode === SAVING && <Status message={SAVING} />}
     </article>
   );
 }
