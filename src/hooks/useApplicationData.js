@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData(initial) {
@@ -13,7 +13,7 @@ export default function useApplicationData(initial) {
 
   /**
    * Function updates the spots in state.days
-   * @param {numer} num 
+   * @param {numer} num
    * @returns updated days object
    */
   const updateSpots = (num) => {
@@ -44,14 +44,22 @@ export default function useApplicationData(initial) {
       [id]: appointment,
     };
 
+
     const PUT_APPOINTMENT = `http://localhost:8001/api/appointments/${id}`;
 
     return axios.put(PUT_APPOINTMENT, appointment).then((res) => {
-      const days = updateSpots(-1);
+      if (!state.appointments[id].interview) {
+        const days = updateSpots(-1);
+        setState((prev) => ({
+          ...prev,
+          appointments,
+          days,
+        }));
+      }
+
       setState((prev) => ({
         ...prev,
         appointments,
-        days,
       }));
     });
   };
