@@ -44,7 +44,6 @@ export default function useApplicationData(initial) {
       [id]: appointment,
     };
 
-
     const PUT_APPOINTMENT = `http://localhost:8001/api/appointments/${id}`;
 
     return axios.put(PUT_APPOINTMENT, appointment).then((res) => {
@@ -55,12 +54,12 @@ export default function useApplicationData(initial) {
           appointments,
           days,
         }));
+      } else {
+        setState((prev) => ({
+          ...prev,
+          appointments,
+        }));
       }
-
-      setState((prev) => ({
-        ...prev,
-        appointments,
-      }));
     });
   };
 
