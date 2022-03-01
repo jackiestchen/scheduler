@@ -8,8 +8,8 @@ A separate scheduler-api is required to run this app. [Link is here.](https://gi
 * 5 interview slots are available per weekday. 
 * Interviewers are only available from Monday to Friday, 12pm - 5pm.
 * Each interview is 1 hour long. 
-* User can add name, edit, and delete appointment.
-* All details such remaining available appointments are dynamically rendered.
+* User can add name, select interviewer, edit, and delete appointment.
+* All details such as remaining available appointments are dynamically rendered.
 
 # Screenshots
 ## Main Page
