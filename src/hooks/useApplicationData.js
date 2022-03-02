@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+//Custom hooks to store data from database
+//And update database with interview details
+//This will be used in the Appointment component (./Appointment/index.js)
+
 export default function useApplicationData(initial) {
   const [state, setState] = useState({
     day: "Monday",

@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import "components/InterviewerListItem.scss";
 
+//InterviewerListItem component will display the interviewer avatar and if selected, display name.
 
 export default function InterviewerListItem(props) {
   const interviewerClass = classNames("interviewers__item", {

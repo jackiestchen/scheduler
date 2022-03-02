@@ -9,6 +9,10 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error";
 
+//Main Appointment component. This is where most of the actions take place. 
+//User can add name, select interviewers and save appointment.
+//Appointment can be modified and if there are missing errors, it will display error.
+
 export default function Appointment(props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
@@ -29,6 +33,11 @@ export default function Appointment(props) {
   );
 
   const save = (name, interviewer, isEdit) => {
+
+    if (!name || !interviewer) {
+      return transition(ERROR_SAVE);
+    }
+
     const interview = {
       student: name,
       interviewer,
