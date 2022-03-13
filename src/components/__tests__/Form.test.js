@@ -43,7 +43,7 @@ describe("Form", () => {
 
     /* 3. Click the save button */
 
-    fireEvent.click(getByText("save"));
+    fireEvent.click(getByText("Save"));
 
     expect(getByText(/student name cannot be blank/i)).toBeInTheDocument();
     expect(onSave).not.toHaveBeenCalled();
@@ -64,7 +64,7 @@ describe("Form", () => {
     );
 
     /* 3. Click the save button */
-    fireEvent.click(queryByText("save"));
+    fireEvent.click(queryByText("Save"));
 
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
     expect(onSave).toHaveBeenCalledTimes(1);
