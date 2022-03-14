@@ -21,13 +21,14 @@ export default function useApplicationData(initial) {
    * @returns updated days object
    */
   const updateSpots = (num) => {
-    let days = [];
-    state.days.forEach((day) => {
+    let days = state.days.map((day) => {
       if (day.name === state.day) {
-        day.spots = day.spots + num;
+        return {...day, spots: day.spots + num}
+      } else {
+        return day;
       }
-      days.push(day);
     });
+
     return days;
   };
 
