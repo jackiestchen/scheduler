@@ -16,8 +16,10 @@ describe("Appointments", () => {
 
     cy.contains("Save").click();
 
-    cy.contains(".appointment__card--show", "Lydia Miller-Jones");
-    cy.contains(".appointment__card--show", "Sylvia Palmer");
+    cy.contains(".appointment__card--show", "Lydia Miller-Jones").should(
+      "exist"
+    );
+    cy.contains(".appointment__card--show", "Sylvia Palmer").should("exist");
   });
 
   it("should edit an interview", () => {
@@ -25,12 +27,26 @@ describe("Appointments", () => {
 
     cy.get("[alt='Tori Malcolm']").click();
 
-    cy.get('[data-testid="student-name-input"]').clear().type("Lydia Miller-Jones");
+    cy.get('[data-testid="student-name-input"]')
+      .clear()
+      .type("Lydia Miller-Jones");
 
     cy.contains("Save").click();
 
-    cy.contains(".appointment__card--show", "Lydia Miller-Jones");
-    cy.contains(".appointment__card--show", "Tori Malcolm");
+    cy.contains(".appointment__card--show", "Lydia Miller-Jones").should(
+      "exist"
+    );
+    cy.contains(".appointment__card--show", "Tori Malcolm").should("exist");
+  });
 
-    });
+  it("should delete an interview", () => {
+    cy.get("[alt='Delete']").first().click({ force: true });
+
+    cy.get(".button--danger").contains("Confirm").click();
+
+    cy.contains("DELETING").should("exist");
+    cy.contains("DELETING").should("not.exist");
+
+    cy.contains(".appointment__card--show", "Archie Cohen").should("not.exist");
+  });
 });
